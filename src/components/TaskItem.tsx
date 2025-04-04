@@ -34,13 +34,14 @@ const TaskItem: React.FC<TaskItemProps> = ({
           onClick={handleToggle} 
           className={cn(
             "flex-shrink-0 w-6 h-6 mt-0.5 rounded-full border border-gray-300 flex items-center justify-center transition-colors", 
-            task.status === "completed" ? "bg-gray-200" : "bg-white"
+            task.status === "completed" ? "bg-gray-200" : "bg-white dark:bg-gray-800"
           )}
         >
           {task.status === "completed" && <Check className="h-4 w-4 text-gray-500" />}
         </button>
         <div className="flex-1">
           <h3 className={cn(
+            "text-foreground",
             task.status === "completed" && "line-through text-gray-400"
           )}>
             {task.title}
@@ -48,14 +49,14 @@ const TaskItem: React.FC<TaskItemProps> = ({
           {task.description && 
             <p className={cn(
               "text-sm mt-1 line-clamp-2", 
-              task.status === "completed" ? "text-gray-400 line-through" : "text-gray-600"
+              task.status === "completed" ? "text-gray-400 line-through" : "text-gray-600 dark:text-gray-400"
             )}>
               {task.description}
             </p>
           }
         </div>
       </div>
-      <div className="mt-4 border-b border-gray-200"></div>
+      <div className="mt-4 border-b border-gray-200 dark:border-gray-700"></div>
     </div>
   );
 };

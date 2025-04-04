@@ -9,26 +9,26 @@ const Index = () => {
   const { tasks } = useTask();
   
   // Get focus tasks (all that have priority='focus' and status='pending')
-  const focusTasks = tasks.filter(task => task.priority === "focus" && task.status !== "completed");
+  // Limit to 3 tasks
+  const focusTasks = tasks
+    .filter(task => task.priority === "focus" && task.status !== "completed")
+    .slice(0, 3);
   
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <div className="max-w-md mx-auto px-4 pb-24">
         <Header />
         
         {focusTasks.length > 0 && (
           <div className="mb-8">
-            <h2 className="font-bold text-xl mb-4">Focus</h2>
+            <h2 className="font-bold text-xl mb-4 text-foreground">Focus</h2>
             {focusTasks.map(task => (
               <div 
                 key={task.id} 
-                className="bg-gray-50 p-4 rounded-xl mb-2 cursor-pointer"
+                className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl mb-2 cursor-pointer"
                 onClick={() => window.location.href = `/edit-task/${task.id}`}
               >
-                <h3 className="font-medium">{task.title}</h3>
-                {task.description && (
-                  <p className="text-sm text-gray-600 mt-1 line-clamp-2">{task.description}</p>
-                )}
+                <h3 className="font-medium text-foreground">{task.title}</h3>
               </div>
             ))}
           </div>

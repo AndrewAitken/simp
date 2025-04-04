@@ -1,18 +1,23 @@
+
 import React from "react";
 import { format } from "date-fns";
 import { useTask, Task, TaskCategory } from "@/contexts/TaskContext";
 import TaskItem from "./TaskItem";
 import { cn } from "@/lib/utils";
+
 interface TaskListProps {
   category: TaskCategory;
 }
+
 const TaskList: React.FC<TaskListProps> = ({
   category
 }) => {
   const {
     tasks
   } = useTask();
+  
   const filteredTasks = tasks.filter(task => task.category === category);
+  
   const getCategoryColor = (category: TaskCategory) => {
     switch (category) {
       case "today":
@@ -25,6 +30,7 @@ const TaskList: React.FC<TaskListProps> = ({
         return "bg-gray-300";
     }
   };
+  
   const getCategoryLabel = (category: TaskCategory) => {
     switch (category) {
       case "today":
@@ -37,6 +43,7 @@ const TaskList: React.FC<TaskListProps> = ({
         return category;
     }
   };
+  
   const getDateSuffix = (category: TaskCategory) => {
     const now = new Date();
     let date;
@@ -52,17 +59,24 @@ const TaskList: React.FC<TaskListProps> = ({
     const suffix = format(date, "EEE");
     return `${day} ${suffix}`;
   };
-  return <div className="mb-4">
+
+  return (
+    <div className="mb-4">
       <div className="flex justify-between items-center mb-2">
         <div className="flex items-center gap-2">
           <div className={cn("w-3 h-3 rounded-full", getCategoryColor(category))}></div>
-          <h2 className="font-bold text-base">{getCategoryLabel(category)}</h2>
+          <h2 className="font-bold text-base text-foreground">{getCategoryLabel(category)}</h2>
         </div>
-        <div className="text-gray-500 text-lg">{getDateSuffix(category)}</div>
+        <div className="text-gray-500 dark:text-gray-400 text-lg">{getDateSuffix(category)}</div>
       </div>
       <div>
-        {filteredTasks.length === 0 ? <div className="text-gray-400 text-center py-4">No tasks scheduled</div> : filteredTasks.map(task => <TaskItem key={task.id} task={task} />)}
+        {filteredTasks.length === 0 ? 
+          <div className="text-gray-400 dark:text-gray-500 text-center py-4">No tasks scheduled</div> : 
+          filteredTasks.map(task => <TaskItem key={task.id} task={task} />)
+        }
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default TaskList;
