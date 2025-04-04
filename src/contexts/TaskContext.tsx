@@ -25,6 +25,7 @@ interface TaskContextType {
   updateTask: (id: string, updates: Partial<Task>) => void;
   deleteTask: (id: string) => void;
   toggleTaskStatus: (id: string) => void;
+  getTaskById: (id: string) => Task | undefined;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -120,10 +121,14 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       )
     );
   };
+  
+  const getTaskById = (id: string) => {
+    return tasks.find(task => task.id === id);
+  };
 
   return (
     <TaskContext.Provider
-      value={{ tasks, addTask, updateTask, deleteTask, toggleTaskStatus }}
+      value={{ tasks, addTask, updateTask, deleteTask, toggleTaskStatus, getTaskById }}
     >
       {children}
     </TaskContext.Provider>
