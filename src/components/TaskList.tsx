@@ -56,7 +56,7 @@ const TaskList: React.FC<TaskListProps> = ({
       <div className="flex justify-between items-center mb-2">
         <div className="flex items-center gap-2">
           <div className={cn("w-3 h-3 rounded-full", getCategoryColor(category))}></div>
-          <h2 className="font-bold text-lg">{getCategoryLabel(category)}</h2>
+          <h2 className="font-bold text-base">{getCategoryLabel(category)}</h2>
         </div>
         <div className="text-gray-500 text-lg">{getDateSuffix(category)}</div>
       </div>
