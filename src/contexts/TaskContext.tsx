@@ -5,6 +5,7 @@ import { format } from "date-fns";
 export type TaskPriority = "focus" | "normal";
 export type TaskStatus = "completed" | "pending";
 export type TaskCategory = "today" | "tomorrow" | "later";
+export type ReminderOption = "none" | "30min" | "1hour" | "2hours" | "1day" | "custom";
 
 export interface Task {
   id: string;
@@ -15,6 +16,7 @@ export interface Task {
   priority: TaskPriority;
   status: TaskStatus;
   createdAt: Date;
+  reminder?: ReminderOption;
 }
 
 interface TaskContextType {
