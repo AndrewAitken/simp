@@ -18,7 +18,7 @@ const Index = () => {
         {focusTasks.length > 0 && <div className="mb-8">
             <h2 className="font-bold mb-4 text-foreground text-lg">Focus</h2>
             {focusTasks.map(task => <div key={task.id} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl mb-2 cursor-pointer" onClick={() => window.location.href = `/edit-task/${task.id}`}>
-                <h3 className="font-medium text-foreground">{task.title}</h3>
+                <h3 className="text-foreground text-lg font-semibold">{task.title}</h3>
               </div>)}
           </div>}
         
