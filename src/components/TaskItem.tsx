@@ -47,7 +47,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
           </h3>
           {task.description && 
             <p className={cn(
-              "text-sm mt-1", 
+              "text-sm mt-1 line-clamp-2", 
               task.status === "completed" ? "text-gray-400 line-through" : "text-gray-600"
             )}>
               {task.description}

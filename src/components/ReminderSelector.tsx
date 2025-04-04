@@ -55,7 +55,7 @@ const ReminderSelector: React.FC<ReminderSelectorProps> = ({ value, onChange }) 
       </SheetTrigger>
       <SheetContent side="bottom" className="pt-6 pb-10 rounded-t-xl">
         <div className="px-4">
-          <h3 className="text-center text-2xl font-medium mb-6">Set Reminder</h3>
+          <h3 className="text-center text-lg font-medium mb-6">Set Reminder</h3>
           <div className="grid grid-cols-2 gap-4 mb-6">
             <Button
               variant="outline"
@@ -119,7 +119,7 @@ const ReminderSelector: React.FC<ReminderSelectorProps> = ({ value, onChange }) 
             </Button>
           </div>
           <Button
-            className="w-full bg-sky-400 hover:bg-sky-500 text-white py-6 rounded-xl"
+            className="w-full bg-black hover:bg-gray-800 text-white py-6 rounded-xl"
             onClick={() => setIsOpen(false)}
           >
             Done

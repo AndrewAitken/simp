@@ -6,13 +6,23 @@ import { TaskCategory } from "@/contexts/TaskContext";
 interface CategoryToggleProps {
   value: TaskCategory;
   onChange: (category: TaskCategory) => void;
+  autoSubmit?: boolean;
 }
 
-const CategoryToggle: React.FC<CategoryToggleProps> = ({ value, onChange }) => {
+const CategoryToggle: React.FC<CategoryToggleProps> = ({ 
+  value, 
+  onChange,
+  autoSubmit = false
+}) => {
+  const handleCategoryChange = (category: TaskCategory) => {
+    onChange(category);
+  };
+
   return (
     <div className="flex space-x-2 mb-6">
       <button
-        onClick={() => onChange("today")}
+        type="button"
+        onClick={() => handleCategoryChange("today")}
         className={cn(
           "flex items-center px-4 py-2 rounded-full border transition-colors",
           value === "today"
@@ -24,7 +34,8 @@ const CategoryToggle: React.FC<CategoryToggleProps> = ({ value, onChange }) => {
         Today
       </button>
       <button
-        onClick={() => onChange("tomorrow")}
+        type="button"
+        onClick={() => handleCategoryChange("tomorrow")}
         className={cn(
           "flex items-center px-4 py-2 rounded-full border transition-colors",
           value === "tomorrow"
@@ -36,7 +47,8 @@ const CategoryToggle: React.FC<CategoryToggleProps> = ({ value, onChange }) => {
         Tomorrow
       </button>
       <button
-        onClick={() => onChange("later")}
+        type="button"
+        onClick={() => handleCategoryChange("later")}
         className={cn(
           "flex items-center px-4 py-2 rounded-full border transition-colors",
           value === "later"

@@ -127,7 +127,7 @@ const EditTask = () => {
               <Input 
                 type="text" 
                 placeholder="Task title" 
-                className="text-xl font-medium border-none shadow-none focus-visible:ring-0 p-0 h-auto placeholder:text-gray-400" 
+                className="text-xl font-medium shadow-none focus-visible:ring-0 h-auto placeholder:text-gray-400" 
                 value={title} 
                 onChange={e => setTitle(e.target.value)} 
                 autoFocus 
@@ -137,7 +137,7 @@ const EditTask = () => {
             <div>
               <Textarea 
                 placeholder="Add description (optional)" 
-                className="min-h-24 border-none shadow-none focus-visible:ring-0 p-0 resize-none placeholder:text-gray-400" 
+                className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400" 
                 value={description} 
                 onChange={e => setDescription(e.target.value)} 
               />
