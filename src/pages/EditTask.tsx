@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Focus, Trash } from "lucide-react";
@@ -11,27 +10,19 @@ import CategoryToggle from "@/components/CategoryToggle";
 import TimePicker from "@/components/TimePicker";
 import ReminderSelector from "@/components/ReminderSelector";
 import { Switch } from "@/components/ui/switch";
-import { 
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 const EditTask = () => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const {
+    id
+  } = useParams<{
+    id: string;
+  }>();
   const {
     getTaskById,
     updateTask,
     deleteTask
   } = useTask();
-  
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [time, setTime] = useState("");
@@ -39,17 +30,14 @@ const EditTask = () => {
   const [isFocusTask, setIsFocusTask] = useState(false);
   const [reminder, setReminder] = useState<ReminderOption>("none");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-
   useEffect(() => {
     if (!id) return;
-    
     const task = getTaskById(id);
     if (!task) {
       toast.error("Task not found");
       navigate("/");
       return;
     }
-    
     setTitle(task.title);
     setDescription(task.description || "");
     setTime(task.time || "");
@@ -57,7 +45,6 @@ const EditTask = () => {
     setIsFocusTask(task.priority === "focus");
     setReminder(task.reminder || "none");
   }, [id, getTaskById, navigate]);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!id) return;
@@ -65,7 +52,6 @@ const EditTask = () => {
       toast.error("Please enter a task title");
       return;
     }
-    
     updateTask(id, {
       title,
       description: description || undefined,
@@ -74,20 +60,16 @@ const EditTask = () => {
       priority: isFocusTask ? "focus" : "normal",
       reminder: reminder !== "none" ? reminder : undefined
     });
-    
     toast.success("Task updated successfully");
     navigate("/");
   };
-  
   const handleDelete = () => {
     if (!id) return;
     deleteTask(id);
     toast.success("Task deleted successfully");
     navigate("/");
   };
-
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <div className="max-w-md mx-auto px-4">
         <header className="py-4 mb-4">
           <div className="flex items-center justify-between">
@@ -124,23 +106,11 @@ const EditTask = () => {
         <form onSubmit={handleSubmit}>
           <div className="space-y-6">
             <div>
-              <Input 
-                type="text" 
-                placeholder="Task title" 
-                className="text-xl font-medium shadow-none focus-visible:ring-0 h-auto placeholder:text-gray-400" 
-                value={title} 
-                onChange={e => setTitle(e.target.value)} 
-                autoFocus 
-              />
+              <Input type="text" placeholder="Task title" value={title} onChange={e => setTitle(e.target.value)} autoFocus className="text-xl font-medium shadow-none focus-visible:ring-0 h-auto placeholder:text-gray-400" />
             </div>
 
             <div>
-              <Textarea 
-                placeholder="Add description (optional)" 
-                className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400" 
-                value={description} 
-                onChange={e => setDescription(e.target.value)} 
-              />
+              <Textarea placeholder="Add description (optional)" className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400" value={description} onChange={e => setDescription(e.target.value)} />
             </div>
 
             <div className="border-t border-gray-100 pt-4">
@@ -157,10 +127,7 @@ const EditTask = () => {
                   <Focus className="h-4 w-4 mr-2" />
                   <span className="text-sm text-gray-500">Focus task</span>
                 </div>
-                <Switch 
-                  checked={isFocusTask}
-                  onCheckedChange={setIsFocusTask}
-                />
+                <Switch checked={isFocusTask} onCheckedChange={setIsFocusTask} />
               </div>
             </div>
 
@@ -176,8 +143,6 @@ const EditTask = () => {
           </div>
         </form>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default EditTask;
