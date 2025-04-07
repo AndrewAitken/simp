@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -6,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Moon, Sun } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/hooks/use-theme";
-
 const Profile = () => {
   const navigate = useNavigate();
   const {
@@ -14,9 +12,8 @@ const Profile = () => {
     setTheme
   } = useTheme();
   const [notifications, setNotifications] = useState(true);
-
   return <div className="min-h-screen bg-background">
-      <div className="max-w-md mx-auto px-4 pb-24">
+      <div className="max-w-md mx-auto px-4 pb-12">
         <header className="flex items-center justify-between py-4 mb-6">
           <div className="flex items-center">
             <button onClick={() => navigate(-1)} className="mr-4 text-foreground hover:text-gray-600 dark:hover:text-gray-300">
