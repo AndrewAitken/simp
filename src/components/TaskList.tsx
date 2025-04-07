@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useTask } from "@/contexts/TaskContext";
 import TaskItem from "./TaskItem";
@@ -21,16 +20,15 @@ const TaskList: React.FC<TaskListProps> = ({
     tomorrow: "Завтра",
     later: "Позже"
   };
-  
+
   // Color classes for category circles
   const circleColors = {
     today: "bg-today",
     tomorrow: "bg-tomorrow",
     later: "bg-later"
   };
-  
   return <div className="mb-8">
-      <h2 className="font-bold mb-2 text-foreground text-base flex items-center">
+      <h2 className="mb-2 text-foreground flex items-center text-sm font-semibold">
         <div className={`w-3 h-3 rounded-full ${circleColors[category]} mr-2`}></div>
         {categoryTitles[category]}
       </h2>
