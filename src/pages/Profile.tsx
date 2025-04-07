@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -5,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Moon, Sun } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/hooks/use-theme";
+
 const Profile = () => {
   const navigate = useNavigate();
   const {
@@ -12,6 +14,7 @@ const Profile = () => {
     setTheme
   } = useTheme();
   const [notifications, setNotifications] = useState(true);
+
   return <div className="min-h-screen bg-background">
       <div className="max-w-md mx-auto px-4 pb-24">
         <header className="flex items-center justify-between py-4 mb-6">
@@ -33,21 +36,21 @@ const Profile = () => {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+          <div className="bg-gray-50 dark:bg-zinc-900 rounded-xl p-4">
             <h3 className="text-lg font-medium mb-4 text-foreground">Personal Data</h3>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Name</label>
-                <input type="text" value="John Doe" className="w-full p-3 bg-white dark:bg-gray-700 rounded-lg text-foreground" readOnly />
+                <input type="text" value="John Doe" className="w-full p-3 bg-white dark:bg-zinc-800 rounded-lg text-foreground" readOnly />
               </div>
               <div>
                 <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">About</label>
-                <textarea value="Task management enthusiast" className="w-full p-3 bg-white dark:bg-gray-700 rounded-lg text-foreground resize-none" readOnly rows={2} />
+                <textarea value="Task management enthusiast" className="w-full p-3 bg-white dark:bg-zinc-800 rounded-lg text-foreground resize-none" readOnly rows={2} />
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+          <div className="bg-gray-50 dark:bg-zinc-900 rounded-xl p-4">
             <h3 className="text-lg font-medium mb-4 text-foreground">Settings</h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -56,9 +59,7 @@ const Profile = () => {
                   <p className="text-sm text-gray-500 dark:text-gray-400">Toggle dark/light theme</p>
                 </div>
                 <div className="flex items-center space-x-2">
-                  
                   <Switch checked={theme === "dark"} onCheckedChange={() => setTheme(theme === "light" ? "dark" : "light")} />
-                  
                 </div>
               </div>
               <div className="flex items-center justify-between">
@@ -71,11 +72,11 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+          <div className="bg-gray-50 dark:bg-zinc-900 rounded-xl p-4">
             <h3 className="text-lg font-medium mb-4 text-foreground">Billing</h3>
             <div className="space-y-4">
               <p className="text-gray-500 dark:text-gray-400">Free Plan</p>
-              <Button className="w-full">Upgrade to Pro</Button>
+              <Button className="w-full bg-black dark:bg-zinc-800 hover:bg-gray-800 dark:hover:bg-zinc-700 text-white">Upgrade to Pro</Button>
             </div>
           </div>
         </div>

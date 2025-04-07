@@ -87,46 +87,46 @@ const TimePicker: React.FC<TimePickerProps> = ({
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerTrigger asChild>
           <div className="flex items-center cursor-pointer">
-            <Clock className="h-4 w-4 mr-2" />
-            <span className={cn("text-sm", value ? "text-black font-medium" : "text-gray-500")}>
+            <Clock className="h-4 w-4 mr-2 text-foreground" />
+            <span className={cn("text-sm", value ? "text-foreground font-medium" : "text-gray-500 dark:text-gray-400")}>
               {value ? `Time: ${displayHour}:${String(minutes).padStart(2, "0")} ${period}` : "Time (optional)"}
             </span>
           </div>
         </DrawerTrigger>
-        <DrawerContent className="max-w-full sm:max-w-md mx-auto">
+        <DrawerContent className="max-w-full sm:max-w-md mx-auto bg-background dark:bg-zinc-950">
           <div className="p-4">
-            <h3 className="text-center text-2xl font-medium mb-6">Select time</h3>
+            <h3 className="text-center text-2xl font-medium mb-6 text-foreground">Select time</h3>
             <div className="flex items-center justify-center mb-8">
               <div className="relative flex items-center justify-center">
                 <div className="flex items-center justify-center text-5xl">
                   <div className="flex flex-col items-center mx-2">
-                    <button className="text-gray-300 hover:text-gray-600" onClick={() => handleHourChange(displayHour + 1)}>
+                    <button className="text-gray-300 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-300" onClick={() => handleHourChange(displayHour + 1)}>
                       {displayHour === 12 ? 1 : displayHour + 1}
                     </button>
-                    <button className="text-black text-6xl font-bold my-4">
+                    <button className="text-foreground text-6xl font-bold my-4">
                       {String(displayHour).padStart(2, "0")}
                     </button>
-                    <button className="text-gray-300 hover:text-gray-600" onClick={() => handleHourChange(displayHour - 1 || 12)}>
+                    <button className="text-gray-300 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-300" onClick={() => handleHourChange(displayHour - 1 || 12)}>
                       {displayHour === 1 ? 12 : displayHour - 1}
                     </button>
                   </div>
-                  <div className="text-5xl font-bold mx-2">:</div>
+                  <div className="text-5xl font-bold mx-2 text-foreground">:</div>
                   <div className="flex flex-col items-center mx-2">
-                    <button className="text-gray-300 hover:text-gray-600" onClick={() => handleMinuteChange((minutes + 5) % 60)}>
+                    <button className="text-gray-300 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-300" onClick={() => handleMinuteChange((minutes + 5) % 60)}>
                       {String((minutes + 5) % 60).padStart(2, "0")}
                     </button>
-                    <button className="text-black text-6xl font-bold my-4">
+                    <button className="text-foreground text-6xl font-bold my-4">
                       {String(minutes).padStart(2, "0")}
                     </button>
-                    <button className="text-gray-300 hover:text-gray-600" onClick={() => handleMinuteChange((minutes - 5 + 60) % 60)}>
+                    <button className="text-gray-300 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-300" onClick={() => handleMinuteChange((minutes - 5 + 60) % 60)}>
                       {String((minutes - 5 + 60) % 60).padStart(2, "0")}
                     </button>
                   </div>
                   <div className="ml-6">
-                    <button className={cn("block w-20 py-2 text-xl rounded-md mb-2", period === "AM" ? "bg-gray-100 font-bold" : "text-gray-400")} onClick={() => period !== "AM" && handlePeriodToggle()}>
+                    <button className={cn("block w-20 py-2 text-xl rounded-md mb-2", period === "AM" ? "bg-gray-100 dark:bg-zinc-800 font-bold" : "text-gray-400")} onClick={() => period !== "AM" && handlePeriodToggle()}>
                       AM
                     </button>
-                    <button className={cn("block w-20 py-2 text-xl rounded-md", period === "PM" ? "bg-gray-100 font-bold" : "text-gray-400")} onClick={() => period !== "PM" && handlePeriodToggle()}>
+                    <button className={cn("block w-20 py-2 text-xl rounded-md", period === "PM" ? "bg-gray-100 dark:bg-zinc-800 font-bold" : "text-gray-400")} onClick={() => period !== "PM" && handlePeriodToggle()}>
                       PM
                     </button>
                   </div>
@@ -134,7 +134,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
               </div>
             </div>
             <div className="flex justify-between">
-              <Button variant="outline" onClick={() => setIsOpen(false)} className="w-[49%] py-6 rounded-xl">
+              <Button variant="outline" onClick={() => setIsOpen(false)} className="w-[49%] py-6 rounded-xl border-gray-300 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200">
                 Cancel
               </Button>
               <Button onClick={handleSave} className="w-[49%] bg-sky-400 hover:bg-sky-500 text-white py-6 rounded-xl">
