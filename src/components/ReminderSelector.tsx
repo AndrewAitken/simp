@@ -1,28 +1,22 @@
-
 import React, { useState } from "react";
 import { Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-
 export type ReminderOption = "none" | "30min" | "1hour" | "2hours" | "1day" | "custom";
-
 interface ReminderSelectorProps {
   value: ReminderOption;
   onChange: (option: ReminderOption) => void;
 }
-
 const ReminderSelector: React.FC<ReminderSelectorProps> = ({
   value,
   onChange
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const handleSelect = (option: ReminderOption) => {
     onChange(option);
     setIsOpen(false);
   };
-
   const getDisplayText = (option: ReminderOption): string => {
     switch (option) {
       case "none":
@@ -41,7 +35,6 @@ const ReminderSelector: React.FC<ReminderSelectorProps> = ({
         return "Установить напоминание";
     }
   };
-
   return <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <div className="flex items-center cursor-pointer">
@@ -61,9 +54,7 @@ const ReminderSelector: React.FC<ReminderSelectorProps> = ({
             <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "1hour" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("1hour")}>
               За час до события
             </Button>
-            <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "2hours" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("2hours")}>
-              За два часа до события
-            </Button>
+            <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "2hours" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("2hours")}>За два часа до</Button>
             <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "1day" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("1day")}>
               За день до события
             </Button>
@@ -81,5 +72,4 @@ const ReminderSelector: React.FC<ReminderSelectorProps> = ({
       </SheetContent>
     </Sheet>;
 };
-
 export default ReminderSelector;
