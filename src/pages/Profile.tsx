@@ -12,7 +12,7 @@ const Profile = () => {
     setTheme
   } = useTheme();
   const [notifications, setNotifications] = useState(true);
-  return <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-zinc-950">
       <div className="max-w-md mx-auto px-4 pb-24">
         <header className="flex items-center justify-between py-4 mb-6">
           <div className="flex items-center">
@@ -33,21 +33,21 @@ const Profile = () => {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+          <div className="rounded-xl p-4 bg-zinc-900">
             <h3 className="text-lg font-medium mb-4 text-foreground">Personal Data</h3>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Name</label>
-                <input type="text" value="John Doe" className="w-full p-3 bg-white dark:bg-gray-700 rounded-lg text-foreground" readOnly />
+                <input type="text" value="John Doe" readOnly className="w-full p-3 rounded-lg text-foreground bg-zinc-800" />
               </div>
               <div>
                 <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">About</label>
-                <textarea value="Task management enthusiast" className="w-full p-3 bg-white dark:bg-gray-700 rounded-lg text-foreground resize-none" readOnly rows={2} />
+                <textarea value="Task management enthusiast" readOnly rows={2} className="w-full p-3 rounded-lg text-foreground resize-none bg-zinc-800" />
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+          <div className="rounded-xl p-4 bg-zinc-900">
             <h3 className="text-lg font-medium mb-4 text-foreground">Settings</h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -71,7 +71,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+          <div className="rounded-xl p-4 bg-zinc-900">
             <h3 className="text-lg font-medium mb-4 text-foreground">Billing</h3>
             <div className="space-y-4">
               <p className="text-gray-500 dark:text-gray-400">Free Plan</p>
