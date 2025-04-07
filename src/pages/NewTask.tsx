@@ -25,7 +25,7 @@ const NewTask = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) {
-      toast.error("Please enter a task title");
+      toast.error("Пожалуйста, введите название задачи");
       return;
     }
     
@@ -38,19 +38,19 @@ const NewTask = () => {
       reminder: reminder !== "none" ? reminder : undefined
     });
     
-    toast.success("Task created successfully");
+    toast.success("Задача успешно создана");
     navigate("/");
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <div className="max-w-md mx-auto px-4">
         <header className="py-4 mb-4">
           <div className="flex items-center">
-            <Button variant="ghost" size="icon" onClick={() => navigate("/")} className="mr-2">
+            <Button variant="ghost" size="icon" onClick={() => navigate("/")} className="mr-2 text-foreground">
               <ArrowLeft className="h-6 w-6" />
             </Button>
-            <h1 className="font-bold text-lg">Create new task</h1>
+            <h1 className="font-bold text-lg text-foreground">Создать новую задачу</h1>
           </div>
         </header>
 
@@ -59,8 +59,8 @@ const NewTask = () => {
             <div>
               <Input 
                 type="text" 
-                placeholder="Task title" 
-                className="text-xl font-medium shadow-none focus-visible:ring-0 h-auto placeholder:text-gray-400" 
+                placeholder="Название задачи" 
+                className="text-xl font-medium shadow-none focus-visible:ring-0 h-auto placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-background text-foreground" 
                 value={title} 
                 onChange={e => setTitle(e.target.value)} 
                 autoFocus 
@@ -69,26 +69,26 @@ const NewTask = () => {
 
             <div>
               <Textarea 
-                placeholder="Add description (optional)" 
-                className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400" 
+                placeholder="Добавить описание (опционально)" 
+                className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-background text-foreground resize-none" 
                 value={description} 
                 onChange={e => setDescription(e.target.value)} 
               />
             </div>
 
-            <div className="border-t border-gray-100 pt-4">
+            <div className="border-t border-gray-100 dark:border-zinc-800 pt-4">
               <TimePicker value={time} onChange={setTime} />
             </div>
 
-            <div className="border-t border-gray-100 pt-4">
+            <div className="border-t border-gray-100 dark:border-zinc-800 pt-4">
               <ReminderSelector value={reminder} onChange={setReminder} />
             </div>
 
-            <div className="border-t border-gray-100 pt-4">
+            <div className="border-t border-gray-100 dark:border-zinc-800 pt-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <Focus className="h-4 w-4 mr-2" />
-                  <span className="text-sm text-gray-500">Focus task</span>
+                  <Focus className="h-4 w-4 mr-2 text-foreground" />
+                  <span className="text-sm text-gray-500 dark:text-gray-400">Фокусная задача</span>
                 </div>
                 <Switch 
                   checked={isFocusTask}
@@ -97,13 +97,13 @@ const NewTask = () => {
               </div>
             </div>
 
-            <div className="border-t border-gray-100 pt-4">
+            <div className="border-t border-gray-100 dark:border-zinc-800 pt-4">
               <CategoryToggle value={category} onChange={setCategory} />
             </div>
 
             <div className="flex justify-center pt-4">
-              <Button type="submit" className="w-full bg-black hover:bg-gray-800 text-white py-6 rounded-xl">
-                Create Task
+              <Button type="submit" className="w-full bg-black hover:bg-gray-800 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-white py-6 rounded-xl">
+                Создать задачу
               </Button>
             </div>
           </div>

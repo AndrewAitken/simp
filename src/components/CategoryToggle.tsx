@@ -27,11 +27,11 @@ const CategoryToggle: React.FC<CategoryToggleProps> = ({
           "flex items-center px-4 py-2 rounded-full border transition-colors",
           value === "today"
             ? "bg-today/10 border-today/30 text-today"
-            : "border-gray-200 text-gray-600 hover:bg-gray-50"
+            : "border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-zinc-700 dark:text-gray-400 dark:hover:bg-zinc-800"
         )}
       >
         <div className="w-2 h-2 rounded-full bg-today mr-2"></div>
-        Today
+        Сегодня
       </button>
       <button
         type="button"
@@ -40,11 +40,11 @@ const CategoryToggle: React.FC<CategoryToggleProps> = ({
           "flex items-center px-4 py-2 rounded-full border transition-colors",
           value === "tomorrow"
             ? "bg-tomorrow/10 border-tomorrow/30 text-tomorrow"
-            : "border-gray-200 text-gray-600 hover:bg-gray-50"
+            : "border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-zinc-700 dark:text-gray-400 dark:hover:bg-zinc-800"
         )}
       >
         <div className="w-2 h-2 rounded-full bg-tomorrow mr-2"></div>
-        Tomorrow
+        Завтра
       </button>
       <button
         type="button"
@@ -53,11 +53,11 @@ const CategoryToggle: React.FC<CategoryToggleProps> = ({
           "flex items-center px-4 py-2 rounded-full border transition-colors",
           value === "later"
             ? "bg-later/10 border-later/30 text-later"
-            : "border-gray-200 text-gray-600 hover:bg-gray-50"
+            : "border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-zinc-700 dark:text-gray-400 dark:hover:bg-zinc-800"
         )}
       >
         <div className="w-2 h-2 rounded-full bg-later mr-2"></div>
-        Later
+        Позже
       </button>
     </div>
   );

@@ -37,7 +37,7 @@ const EditTask = () => {
     if (!id) return;
     const task = getTaskById(id);
     if (!task) {
-      toast.error("Task not found");
+      toast.error("Задача не найдена");
       navigate("/");
       return;
     }
@@ -53,7 +53,7 @@ const EditTask = () => {
     e.preventDefault();
     if (!id) return;
     if (!title.trim()) {
-      toast.error("Please enter a task title");
+      toast.error("Пожалуйста, введите название задачи");
       return;
     }
     updateTask(id, {
@@ -64,14 +64,14 @@ const EditTask = () => {
       priority: isFocusTask ? "focus" : "normal",
       reminder: reminder !== "none" ? reminder : undefined
     });
-    toast.success("Task updated successfully");
+    toast.success("Задача успешно обновлена");
     navigate("/");
   };
 
   const handleDelete = () => {
     if (!id) return;
     deleteTask(id);
-    toast.success("Task deleted successfully");
+    toast.success("Задача успешно удалена");
     navigate("/");
   };
 
@@ -84,7 +84,7 @@ const EditTask = () => {
               <Button variant="ghost" size="icon" onClick={() => navigate("/")} className="mr-2 text-foreground">
                 <ArrowLeft className="h-6 w-6" />
               </Button>
-              <h1 className="font-bold text-lg text-foreground">Edit task</h1>
+              <h1 className="font-bold text-lg text-foreground">Редактирование задачи</h1>
             </div>
             <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
               <AlertDialogTrigger asChild>
@@ -94,15 +94,15 @@ const EditTask = () => {
               </AlertDialogTrigger>
               <AlertDialogContent className="bg-background border-border">
                 <AlertDialogHeader>
-                  <AlertDialogTitle className="text-foreground">Delete task</AlertDialogTitle>
+                  <AlertDialogTitle className="text-foreground">Удалить задачу</AlertDialogTitle>
                   <AlertDialogDescription className="text-muted-foreground">
-                    Are you sure you want to delete this task? This action cannot be undone.
+                    Вы уверены, что хотите удалить эту задачу? Это действие нельзя отменить.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel className="bg-background text-foreground border-border hover:bg-accent">Cancel</AlertDialogCancel>
+                  <AlertDialogCancel className="bg-background text-foreground border-border hover:bg-accent">Отмена</AlertDialogCancel>
                   <AlertDialogAction onClick={handleDelete} className="bg-red-500 hover:bg-red-600">
-                    Delete
+                    Удалить
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -115,7 +115,7 @@ const EditTask = () => {
             <div>
               <Input 
                 type="text" 
-                placeholder="Task title" 
+                placeholder="Название задачи" 
                 value={title} 
                 onChange={e => setTitle(e.target.value)} 
                 autoFocus 
@@ -125,7 +125,7 @@ const EditTask = () => {
 
             <div>
               <Textarea 
-                placeholder="Add description (optional)" 
+                placeholder="Добавить описание (опционально)" 
                 className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-background text-foreground resize-none" 
                 value={description} 
                 onChange={e => setDescription(e.target.value)} 
@@ -144,7 +144,7 @@ const EditTask = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <Focus className="h-4 w-4 mr-2 text-foreground" />
-                  <span className="text-sm text-gray-500 dark:text-gray-400">Focus task</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">Фокусная задача</span>
                 </div>
                 <Switch checked={isFocusTask} onCheckedChange={setIsFocusTask} />
               </div>
@@ -156,7 +156,7 @@ const EditTask = () => {
 
             <div className="flex justify-center pt-4">
               <Button type="submit" className="w-full bg-black hover:bg-gray-800 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-white py-6 rounded-xl">
-                Save Changes
+                Сохранить изменения
               </Button>
             </div>
           </div>
