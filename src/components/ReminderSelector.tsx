@@ -51,13 +51,9 @@ const ReminderSelector: React.FC<ReminderSelectorProps> = ({
             <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "none" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("none")}>
               Без напоминания
             </Button>
-            <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "1hour" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("1hour")}>
-              За час до события
-            </Button>
+            <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "1hour" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("1hour")}>За час до</Button>
             <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "2hours" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("2hours")}>За два часа до</Button>
-            <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "1day" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("1day")}>
-              За день до события
-            </Button>
+            <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "1day" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("1day")}>За день до </Button>
             <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "30min" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("30min")}>
               За 30 минут
             </Button>
