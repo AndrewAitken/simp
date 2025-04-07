@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -6,21 +5,18 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Moon, Sun } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/hooks/use-theme";
-
 const Profile = () => {
   const navigate = useNavigate();
-  const { theme, setTheme } = useTheme();
+  const {
+    theme,
+    setTheme
+  } = useTheme();
   const [notifications, setNotifications] = useState(true);
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <div className="max-w-md mx-auto px-4 pb-24">
         <header className="flex items-center justify-between py-4 mb-6">
           <div className="flex items-center">
-            <button 
-              onClick={() => navigate(-1)} 
-              className="mr-4 text-foreground hover:text-gray-600 dark:hover:text-gray-300"
-            >
+            <button onClick={() => navigate(-1)} className="mr-4 text-foreground hover:text-gray-600 dark:hover:text-gray-300">
               <ArrowLeft className="h-6 w-6" />
             </button>
             <h1 className="text-xl font-bold text-foreground">Profile</h1>
@@ -42,21 +38,11 @@ const Profile = () => {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Name</label>
-                <input 
-                  type="text" 
-                  value="John Doe" 
-                  className="w-full p-3 bg-white dark:bg-gray-700 rounded-lg text-foreground"
-                  readOnly
-                />
+                <input type="text" value="John Doe" className="w-full p-3 bg-white dark:bg-gray-700 rounded-lg text-foreground" readOnly />
               </div>
               <div>
                 <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">About</label>
-                <textarea 
-                  value="Task management enthusiast" 
-                  className="w-full p-3 bg-white dark:bg-gray-700 rounded-lg text-foreground resize-none"
-                  readOnly
-                  rows={2}
-                />
+                <textarea value="Task management enthusiast" className="w-full p-3 bg-white dark:bg-gray-700 rounded-lg text-foreground resize-none" readOnly rows={2} />
               </div>
             </div>
           </div>
@@ -70,12 +56,9 @@ const Profile = () => {
                   <p className="text-sm text-gray-500 dark:text-gray-400">Toggle dark/light theme</p>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Sun className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-                  <Switch 
-                    checked={theme === "dark"}
-                    onCheckedChange={() => setTheme(theme === "light" ? "dark" : "light")}
-                  />
-                  <Moon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                  
+                  <Switch checked={theme === "dark"} onCheckedChange={() => setTheme(theme === "light" ? "dark" : "light")} />
+                  
                 </div>
               </div>
               <div className="flex items-center justify-between">
@@ -83,10 +66,7 @@ const Profile = () => {
                   <p className="font-medium text-foreground">Notifications</p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">Enable task reminders</p>
                 </div>
-                <Switch 
-                  checked={notifications}
-                  onCheckedChange={setNotifications}
-                />
+                <Switch checked={notifications} onCheckedChange={setNotifications} />
               </div>
             </div>
           </div>
@@ -100,8 +80,6 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Profile;
