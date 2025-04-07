@@ -1,12 +1,15 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
+
 interface TimePickerProps {
   value: string;
   onChange: (time: string) => void;
 }
+
 const TimePicker: React.FC<TimePickerProps> = ({
   value,
   onChange
@@ -33,12 +36,14 @@ const TimePicker: React.FC<TimePickerProps> = ({
     }
     return new Date().getHours() >= 12 ? "PM" : "AM";
   });
+
   const formatDisplayHour = (h: number): number => {
     if (period === "AM") {
       return h === 0 ? 12 : h;
     }
     return h === 12 ? 12 : h - 12;
   };
+
   const handleSave = () => {
     let h = hours;
     if (period === "PM" && h < 12) {
@@ -50,16 +55,19 @@ const TimePicker: React.FC<TimePickerProps> = ({
     onChange(formattedTime);
     setIsOpen(false);
   };
+
   const handleHourChange = (newHour: number) => {
     if (newHour >= 1 && newHour <= 12) {
       setHours(period === "AM" ? newHour === 12 ? 0 : newHour : newHour === 12 ? 12 : newHour + 12);
     }
   };
+
   const handleMinuteChange = (newMinute: number) => {
     if (newMinute >= 0 && newMinute <= 59) {
       setMinutes(newMinute);
     }
   };
+
   const handlePeriodToggle = () => {
     const newPeriod = period === "AM" ? "PM" : "AM";
     setPeriod(newPeriod);
@@ -71,14 +79,17 @@ const TimePicker: React.FC<TimePickerProps> = ({
       setHours(hours - 12);
     }
   };
+
   const displayHour = formatDisplayHour(hours);
-  return <div>
+  
+  return (
+    <div>
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerTrigger asChild>
           <div className="flex items-center cursor-pointer">
             <Clock className="h-4 w-4 mr-2 text-foreground" />
             <span className={cn("text-sm", value ? "text-foreground font-medium" : "text-gray-500 dark:text-gray-400")}>
-              {value ? `Time: ${displayHour}:${String(minutes).padStart(2, "0")} ${period}` : "Time (optional)"}
+              {value ? `Время: ${displayHour}:${String(minutes).padStart(2, "0")} ${period}` : "Время (опционально)"}
             </span>
           </div>
         </DrawerTrigger>
@@ -124,15 +135,17 @@ const TimePicker: React.FC<TimePickerProps> = ({
             </div>
             <div className="flex justify-between">
               <Button variant="outline" onClick={() => setIsOpen(false)} className="w-[49%] py-6 rounded-xl border-gray-300 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200">
-                Cancel
+                Отмена
               </Button>
-              <Button onClick={handleSave} className="w-[49%] bg-sky-400 hover:bg-sky-500 text-white py-6 rounded-xl">
-                Save
+              <Button onClick={handleSave} className="w-[49%] bg-primary hover:bg-primary/90 text-white py-6 rounded-xl">
+                Сохранить
               </Button>
             </div>
           </div>
         </DrawerContent>
       </Drawer>
-    </div>;
+    </div>
+  );
 };
+
 export default TimePicker;
