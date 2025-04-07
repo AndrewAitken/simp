@@ -69,7 +69,7 @@ const EditTask = () => {
     toast.success("Task deleted successfully");
     navigate("/");
   };
-  return <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-zinc-950">
       <div className="max-w-md mx-auto px-4">
         <header className="py-4 mb-4">
           <div className="flex items-center justify-between">
@@ -106,11 +106,11 @@ const EditTask = () => {
         <form onSubmit={handleSubmit}>
           <div className="space-y-6">
             <div>
-              <Input type="text" placeholder="Task title" value={title} onChange={e => setTitle(e.target.value)} autoFocus className="text-xl font-medium shadow-none focus-visible:ring-0 h-auto placeholder:text-gray-400" />
+              <Input type="text" placeholder="Task title" value={title} onChange={e => setTitle(e.target.value)} autoFocus className="text-xl font-medium shadow-none focus-visible:ring-0 h-auto placeholder:text-gray-400 bg-zinc-950" />
             </div>
 
             <div>
-              <Textarea placeholder="Add description (optional)" className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400" value={description} onChange={e => setDescription(e.target.value)} />
+              <Textarea placeholder="Add description (optional)" value={description} onChange={e => setDescription(e.target.value)} className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400 bg-zinc-950" />
             </div>
 
             <div className="border-t border-gray-100 pt-4">
