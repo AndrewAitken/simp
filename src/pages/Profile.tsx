@@ -1,59 +1,151 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Moon, Sun } from "lucide-react";
+import { ArrowLeft, LogOut, Moon, Sun } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/hooks/use-theme";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+
 const Profile = () => {
   const navigate = useNavigate();
-  const {
-    theme,
-    setTheme
-  } = useTheme();
+  const { theme, setTheme } = useTheme();
+  
   const [notifications, setNotifications] = useState(true);
-  return <div className="min-h-screen bg-background">
+  
+  // Profile data states
+  const [name, setName] = useState("Джон Доу");
+  const [about, setAbout] = useState("Энтузиаст управления задачами");
+  
+  // Editing states
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isEditingAbout, setIsEditingAbout] = useState(false);
+  const [tempName, setTempName] = useState(name);
+  const [tempAbout, setTempAbout] = useState(about);
+
+  // Handlers for name field
+  const startEditingName = () => {
+    setTempName(name);
+    setIsEditingName(true);
+  };
+  
+  const saveName = () => {
+    setName(tempName);
+    setIsEditingName(false);
+  };
+  
+  const cancelEditName = () => {
+    setIsEditingName(false);
+  };
+
+  // Handlers for about field
+  const startEditingAbout = () => {
+    setTempAbout(about);
+    setIsEditingAbout(true);
+  };
+  
+  const saveAbout = () => {
+    setAbout(tempAbout);
+    setIsEditingAbout(false);
+  };
+  
+  const cancelEditAbout = () => {
+    setIsEditingAbout(false);
+  };
+
+  // Handle sign out
+  const handleSignOut = () => {
+    // Here would be sign out logic when authentication is implemented
+    console.log("Выход из системы");
+    // For now just navigate to home
+    navigate("/");
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
       <div className="max-w-md mx-auto px-4 pb-12">
         <header className="flex items-center justify-between py-4 mb-6">
           <div className="flex items-center">
             <button onClick={() => navigate(-1)} className="mr-4 text-foreground hover:text-gray-600 dark:hover:text-gray-300">
               <ArrowLeft className="h-6 w-6" />
             </button>
-            <h1 className="text-xl font-bold text-foreground">Profile</h1>
+            <h1 className="text-xl font-bold text-foreground">Профиль</h1>
           </div>
         </header>
 
         <div className="flex flex-col items-center mb-8">
           <Avatar className="h-20 w-20 mb-4">
-            <AvatarImage src="https://github.com/shadcn.png" alt="User" />
-            <AvatarFallback>U</AvatarFallback>
+            <AvatarImage src="https://github.com/shadcn.png" alt="Пользователь" />
+            <AvatarFallback>П</AvatarFallback>
           </Avatar>
-          <h2 className="text-xl font-semibold text-foreground">John Doe</h2>
+          <h2 className="text-xl font-semibold text-foreground">{name}</h2>
           <p className="text-gray-500 dark:text-gray-400">john.doe@example.com</p>
         </div>
 
         <div className="space-y-6">
           <div className="bg-gray-50 dark:bg-zinc-900 rounded-xl p-4">
-            <h3 className="text-lg font-medium mb-4 text-foreground">Personal Data</h3>
+            <h3 className="text-lg font-medium mb-4 text-foreground">Персональные данные</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Name</label>
-                <input type="text" value="John Doe" className="w-full p-3 bg-white dark:bg-zinc-800 rounded-lg text-foreground" readOnly />
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Имя</label>
+                {isEditingName ? (
+                  <div>
+                    <Input 
+                      type="text" 
+                      value={tempName} 
+                      onChange={(e) => setTempName(e.target.value)}
+                      className="w-full p-3 bg-white dark:bg-zinc-800 rounded-lg text-foreground mb-2" 
+                    />
+                    <div className="flex space-x-2">
+                      <Button onClick={saveName} size="sm" variant="default">Сохранить</Button>
+                      <Button onClick={cancelEditName} size="sm" variant="outline">Отмена</Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div 
+                    className="w-full p-3 bg-white dark:bg-zinc-800 rounded-lg text-foreground cursor-pointer"
+                    onClick={startEditingName}
+                  >
+                    {name}
+                  </div>
+                )}
               </div>
               <div>
-                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">About</label>
-                <textarea value="Task management enthusiast" className="w-full p-3 bg-white dark:bg-zinc-800 rounded-lg text-foreground resize-none" readOnly rows={2} />
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">О себе</label>
+                {isEditingAbout ? (
+                  <div>
+                    <Textarea 
+                      value={tempAbout} 
+                      onChange={(e) => setTempAbout(e.target.value)}
+                      className="w-full p-3 bg-white dark:bg-zinc-800 rounded-lg text-foreground mb-2"
+                      rows={2}
+                    />
+                    <div className="flex space-x-2">
+                      <Button onClick={saveAbout} size="sm" variant="default">Сохранить</Button>
+                      <Button onClick={cancelEditAbout} size="sm" variant="outline">Отмена</Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div 
+                    className="w-full p-3 bg-white dark:bg-zinc-800 rounded-lg text-foreground resize-none cursor-pointer" 
+                    onClick={startEditingAbout}
+                  >
+                    {about}
+                  </div>
+                )}
               </div>
             </div>
           </div>
 
           <div className="bg-gray-50 dark:bg-zinc-900 rounded-xl p-4">
-            <h3 className="text-lg font-medium mb-4 text-foreground">Settings</h3>
+            <h3 className="text-lg font-medium mb-4 text-foreground">Настройки</h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-foreground">Dark Mode</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Toggle dark/light theme</p>
+                  <p className="font-medium text-foreground">Темный режим</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Переключить темную/светлую тему</p>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Switch checked={theme === "dark"} onCheckedChange={() => setTheme(theme === "light" ? "dark" : "light")} />
@@ -61,8 +153,8 @@ const Profile = () => {
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-foreground">Notifications</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Enable task reminders</p>
+                  <p className="font-medium text-foreground">Уведомления</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Включить напоминания о задачах</p>
                 </div>
                 <Switch checked={notifications} onCheckedChange={setNotifications} />
               </div>
@@ -70,14 +162,25 @@ const Profile = () => {
           </div>
 
           <div className="bg-gray-50 dark:bg-zinc-900 rounded-xl p-4">
-            <h3 className="text-lg font-medium mb-4 text-foreground">Billing</h3>
+            <h3 className="text-lg font-medium mb-4 text-foreground">Тарифный план</h3>
             <div className="space-y-4">
-              <p className="text-gray-500 dark:text-gray-400">Free Plan</p>
-              <Button className="w-full bg-black dark:bg-zinc-800 hover:bg-gray-800 dark:hover:bg-zinc-700 text-white">Upgrade to Pro</Button>
+              <p className="text-gray-500 dark:text-gray-400">Бесплатный план</p>
+              <Button className="w-full bg-black dark:bg-zinc-800 hover:bg-gray-800 dark:hover:bg-zinc-700 text-white">Перейти на Про</Button>
             </div>
           </div>
+          
+          <Button 
+            onClick={handleSignOut}
+            variant="destructive"
+            className="w-full flex items-center justify-center"
+          >
+            <LogOut className="mr-2 h-4 w-4" />
+            Выйти из системы
+          </Button>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default Profile;

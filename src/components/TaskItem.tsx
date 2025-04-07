@@ -9,12 +9,8 @@ interface TaskItemProps {
   task: Task;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({
-  task
-}) => {
-  const {
-    toggleTaskStatus
-  } = useTask();
+const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
+  const { toggleTaskStatus } = useTask();
   const navigate = useNavigate();
   
   const handleToggle = (e: React.MouseEvent) => {

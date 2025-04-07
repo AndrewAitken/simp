@@ -1,11 +1,23 @@
+
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { Link } from "react-router-dom";
-const FloatingButton: React.FC = () => {
-  return <Link to="/new-task">
-      <button className="fixed bottom-6 right-6 w-16 h-16 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center shadow-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors z-50">
-        <Plus className="h-7 w-7" />
-      </button>
-    </Link>;
+
+const FloatingButton = () => {
+  const navigate = useNavigate();
+  
+  return (
+    <div className="fixed bottom-8 right-8 z-50">
+      <Button 
+        className="h-14 w-14 rounded-full bg-black dark:bg-zinc-800 hover:bg-gray-800 dark:hover:bg-zinc-700 shadow-xl" 
+        onClick={() => navigate("/new-task")}
+      >
+        <Plus className="h-6 w-6" />
+        <span className="sr-only">Создать задачу</span>
+      </Button>
+    </div>
+  );
 };
+
 export default FloatingButton;
