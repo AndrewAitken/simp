@@ -11,7 +11,7 @@ const Index = () => {
   // Get focus tasks (all that have priority='focus' and status='pending')
   // Limit to 3 tasks
   const focusTasks = tasks.filter(task => task.priority === "focus" && task.status !== "completed").slice(0, 3);
-  return <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-zinc-950">
       <div className="max-w-md mx-auto pb-24 px-[20px]">
         <Header />
         
