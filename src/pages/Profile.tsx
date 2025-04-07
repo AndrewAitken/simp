@@ -135,11 +135,11 @@ const Profile = () => {
             <h3 className="mb-4 text-foreground text-base font-semibold">Тарифный план</h3>
             <div className="space-y-4">
               <p className="text-gray-500 dark:text-gray-400">Бесплатный план</p>
-              <Button className="w-full bg-black dark:bg-zinc-800 hover:bg-gray-800 dark:hover:bg-zinc-700 text-white">Перейти на Про</Button>
+              <Button className="w-full bg-black dark:bg-zinc-800 hover:bg-gray-800 dark:hover:bg-zinc-700 text-white py-[24px] rounded-xl">Перейти на Про</Button>
             </div>
           </div>
           
-          <Button onClick={handleSignOut} variant="destructive" className="w-full flex items-center justify-center">
+          <Button onClick={handleSignOut} variant="destructive" className="w-full flex items-center justify-center py-[24px] rounded-xl">
             <LogOut className="mr-2 h-4 w-4" />
             Выйти из системы
           </Button>
