@@ -21,7 +21,7 @@ const TaskList: React.FC<TaskListProps> = ({
     later: "Позже"
   };
   return <div className="mb-8">
-      <h2 className="font-bold mb-4 text-foreground text-base">{categoryTitles[category]}</h2>
+      <h2 className="font-bold mb-2 text-foreground text-base">{categoryTitles[category]}</h2>
       {filteredTasks.length === 0 ? <p className="text-gray-500 dark:text-gray-400 text-center py-4">Нет задач</p> : filteredTasks.map(task => <TaskItem key={task.id} task={task} />)}
     </div>;
 };
