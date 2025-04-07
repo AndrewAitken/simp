@@ -65,7 +65,7 @@ const Profile = () => {
             <button onClick={() => navigate(-1)} className="mr-4 text-foreground hover:text-gray-600 dark:hover:text-gray-300">
               <ArrowLeft className="h-6 w-6" />
             </button>
-            <h1 className="text-xl font-bold text-foreground">Профиль</h1>
+            <h1 className="font-bold text-foreground text-lg">Профиль</h1>
           </div>
         </header>
 
@@ -74,7 +74,7 @@ const Profile = () => {
             <AvatarImage src="https://github.com/shadcn.png" alt="Пользователь" />
             <AvatarFallback>П</AvatarFallback>
           </Avatar>
-          <h2 className="text-xl font-semibold text-foreground">{name}</h2>
+          <h2 className="font-semibold text-foreground text-2xl">{name}</h2>
           <p className="text-gray-500 dark:text-gray-400">john.doe@example.com</p>
         </div>
 
