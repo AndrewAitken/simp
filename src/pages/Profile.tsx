@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -7,6 +8,8 @@ import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/hooks/use-theme";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+
 const Profile = () => {
   const navigate = useNavigate();
   const {
@@ -58,6 +61,12 @@ const Profile = () => {
     // For now just navigate to home
     navigate("/");
   };
+  
+  // Handle pro subscription
+  const handleProUpgrade = () => {
+    toast.info("Будет позже 🚀");
+  };
+  
   return <div className="min-h-screen bg-background">
       <div className="max-w-md mx-auto px-4 pb-12">
         <header className="flex items-center justify-between py-4 mb-6">
@@ -135,7 +144,12 @@ const Profile = () => {
             <h3 className="mb-4 text-foreground text-base font-semibold">Тарифный план</h3>
             <div className="space-y-4">
               <p className="text-gray-500 dark:text-gray-400">Бесплатный план</p>
-              <Button className="w-full bg-black dark:bg-zinc-800 hover:bg-gray-800 dark:hover:bg-zinc-700 text-white py-[24px] rounded-xl">Перейти на Про</Button>
+              <Button 
+                className="w-full bg-black dark:bg-zinc-800 hover:bg-gray-800 dark:hover:bg-zinc-700 text-white py-[24px] rounded-xl" 
+                onClick={handleProUpgrade}
+              >
+                Перейти на Про
+              </Button>
             </div>
           </div>
           

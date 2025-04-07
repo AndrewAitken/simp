@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
@@ -119,7 +120,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
               <Button variant="outline" onClick={() => setIsOpen(false)} className="w-[49%] py-6 rounded-xl border-gray-300 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200">
                 Отмена
               </Button>
-              <Button onClick={handleSave} className="w-[49%] bg-primary hover:bg-primary/90 text-white py-6 rounded-xl">
+              <Button onClick={handleSave} className="w-[49%] bg-black hover:bg-gray-800 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-white py-6 rounded-xl">
                 Сохранить
               </Button>
             </div>

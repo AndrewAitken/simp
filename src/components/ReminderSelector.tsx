@@ -26,19 +26,19 @@ const ReminderSelector: React.FC<ReminderSelectorProps> = ({
   const getDisplayText = (option: ReminderOption): string => {
     switch (option) {
       case "none":
-        return "No reminder";
+        return "Без напоминания";
       case "30min":
-        return "30 minutes before";
+        return "За 30 минут до события";
       case "1hour":
-        return "In an hour";
+        return "За час до события";
       case "2hours":
-        return "In two hours";
+        return "За два часа до события";
       case "1day":
-        return "A day before";
+        return "За день до события";
       case "custom":
-        return "Custom";
+        return "Свой вариант";
       default:
-        return "Set reminder";
+        return "Установить напоминание";
     }
   };
 
@@ -47,35 +47,35 @@ const ReminderSelector: React.FC<ReminderSelectorProps> = ({
         <div className="flex items-center cursor-pointer">
           <Bell className="h-4 w-4 mr-2 text-foreground" />
           <span className={cn("text-sm", value !== "none" ? "text-foreground font-medium" : "text-gray-500 dark:text-gray-400")}>
-            {value !== "none" ? getDisplayText(value) : "Reminder (optional)"}
+            {value !== "none" ? getDisplayText(value) : "Напоминание (опционально)"}
           </span>
         </div>
       </SheetTrigger>
       <SheetContent side="bottom" className="pt-6 pb-10 rounded-t-xl bg-background dark:bg-zinc-950">
         <div className="px-0">
-          <h3 className="text-center text-lg font-medium mb-6 text-foreground">Set Reminder</h3>
+          <h3 className="text-center text-lg font-medium mb-6 text-foreground">Установить напоминание</h3>
           <div className="grid grid-cols-2 gap-4 mb-6">
             <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "none" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("none")}>
-              No Reminder
+              Без напоминания
             </Button>
             <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "1hour" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("1hour")}>
-              In an Hour
+              За час до события
             </Button>
             <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "2hours" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("2hours")}>
-              In Two Hours
+              За два часа до события
             </Button>
             <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "1day" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("1day")}>
-              Day Before
+              За день до события
             </Button>
             <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "30min" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("30min")}>
-              30 Minutes Before
+              За 30 минут
             </Button>
             <Button variant="outline" className={cn("h-16 rounded-xl dark:bg-zinc-900 dark:text-white dark:border-zinc-700", value === "custom" && "border-2 border-gray-300 dark:border-gray-600")} onClick={() => handleSelect("custom")}>
-              Custom
+              Свой вариант
             </Button>
           </div>
           <Button className="w-full bg-black hover:bg-gray-800 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-white py-6 rounded-xl" onClick={() => setIsOpen(false)}>
-            Done
+            Готово
           </Button>
         </div>
       </SheetContent>

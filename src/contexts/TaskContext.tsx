@@ -1,6 +1,6 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { format } from "date-fns";
+import { toast } from "sonner";
 
 export type TaskPriority = "focus" | "normal";
 export type TaskStatus = "completed" | "pending";
@@ -30,22 +30,21 @@ interface TaskContextType {
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
-// Mock data for initial tasks
-const initialTasks: Task[] = [
+// Example tasks for first-time users
+const exampleTasks: Task[] = [
   {
     id: "1",
-    title: "Record podcast video",
-    description: "Don't forget to ask confirmation with the guest from Stanford.",
-    time: "15:30",
+    title: "Завести первую задачу",
+    description: "Нажмите на плюсик внизу экрана, заполните название и описание задачи.",
     category: "today",
     priority: "normal",
-    status: "completed",
+    status: "pending",
     createdAt: new Date(),
   },
   {
     id: "2",
-    title: "Dinner with Anna",
-    time: "19:00",
+    title: "Редактировать задачу",
+    description: "Нажмите на задачу, чтобы отредактировать ее детали или изменить категорию.",
     category: "today",
     priority: "normal",
     status: "pending",
@@ -53,41 +52,109 @@ const initialTasks: Task[] = [
   },
   {
     id: "3",
-    title: "Write blog post",
-    category: "today",
-    priority: "normal",
-    status: "completed",
-    createdAt: new Date(),
-  },
-  {
-    id: "4",
-    title: "Send podcast script",
-    category: "today",
-    priority: "normal",
-    status: "completed",
-    createdAt: new Date(),
-  },
-  {
-    id: "5",
-    title: "Update Notion template",
+    title: "Удалить задачу",
+    description: "В режиме редактирования задачи нажмите на корзину, чтобы удалить задачу.",
     category: "tomorrow",
     priority: "normal",
     status: "pending",
     createdAt: new Date(),
   },
   {
-    id: "6",
-    title: "Plan content calendar",
-    time: "19:00",
+    id: "4",
+    title: "Изучить профиль",
+    description: "В профиле вы можете настроить тему приложения и управлять личными данными.",
     category: "later",
     priority: "normal",
     status: "pending",
-    createdAt: new Date(Date.now() + 86400000 * 7),
-  },
+    createdAt: new Date(),
+  }
 ];
 
+// Check if user is a first-time visitor
+const isFirstVisit = () => {
+  return localStorage.getItem('hasVisitedBefore') !== 'true';
+};
+
 export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    // Load tasks from localStorage
+    const storedTasks = localStorage.getItem('tasks');
+    
+    // If first visit, show example tasks
+    if (isFirstVisit()) {
+      localStorage.setItem('hasVisitedBefore', 'true');
+      return exampleTasks;
+    }
+    
+    // Otherwise return stored tasks or empty array
+    return storedTasks ? JSON.parse(storedTasks) : [];
+  });
+
+  // Save tasks to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+  // Function to request notification permission
+  useEffect(() => {
+    if ("Notification" in window) {
+      Notification.requestPermission();
+    }
+  }, []);
+
+  // Check for tasks with reminders
+  useEffect(() => {
+    const checkReminders = () => {
+      const now = new Date();
+      tasks.forEach(task => {
+        if (task.status === "pending" && task.reminder && task.time) {
+          const [hours, minutes] = task.time.split(":").map(Number);
+          const reminderDate = new Date();
+          reminderDate.setHours(hours, minutes, 0);
+
+          let timeToRemind = 0;
+          switch (task.reminder) {
+            case "30min":
+              timeToRemind = 30 * 60 * 1000;
+              break;
+            case "1hour":
+              timeToRemind = 60 * 60 * 1000;
+              break;
+            case "2hours":
+              timeToRemind = 2 * 60 * 60 * 1000;
+              break;
+            case "1day":
+              timeToRemind = 24 * 60 * 60 * 1000;
+              break;
+          }
+
+          const reminderTime = new Date(reminderDate.getTime() - timeToRemind);
+          
+          // Check if it's time to show notification (within last minute)
+          const timeDiff = Math.abs(now.getTime() - reminderTime.getTime());
+          if (timeDiff < 60000) {
+            // Show notification
+            if (Notification.permission === "granted") {
+              new Notification("Напоминание о задаче", {
+                body: task.title,
+                icon: "/favicon.ico"
+              });
+            }
+            toast.info("Напоминание о задаче", {
+              description: task.title
+            });
+          }
+        }
+      });
+    };
+
+    // Check every 60 seconds
+    const interval = setInterval(checkReminders, 60000);
+    // Run once immediately
+    checkReminders();
+    
+    return () => clearInterval(interval);
+  }, [tasks]);
 
   const addTask = (task: Omit<Task, "id" | "createdAt" | "status">) => {
     const newTask: Task = {
