@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
@@ -37,6 +38,8 @@ interface TaskContextType {
   addSubtask: (taskId: string, subtaskTitle: string) => void;
   removeSubtask: (taskId: string, subtaskId: string) => void;
   toggleSubtaskStatus: (taskId: string, subtaskId: string) => void;
+  generateSubtasks: (taskId: string, title: string, description?: string) => Promise<SubTask[]>;
+  generateSubtasksFromText: (title: string, description?: string) => Promise<SubTask[]>;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -268,6 +271,129 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
   };
 
+  // Generate subtasks for an existing task using a simple algorithm
+  const generateSubtasks = async (taskId: string, title: string, description?: string): Promise<SubTask[]> => {
+    // Simulate a delay to mimic API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    const taskText = `${title}${description ? " " + description : ""}`;
+    
+    // Generate 5 subtasks based on the task
+    const generatedSubtasks = generateSubtasksList(taskText);
+    
+    // Add them to the task
+    setTasks((prev) =>
+      prev.map((task) => {
+        if (task.id === taskId) {
+          const existingSubtasks = task.subtasks || [];
+          return {
+            ...task,
+            subtasks: [
+              ...existingSubtasks,
+              ...generatedSubtasks
+            ]
+          };
+        }
+        return task;
+      })
+    );
+    
+    return generatedSubtasks;
+  };
+  
+  // Generate subtasks from text without adding them to any task
+  const generateSubtasksFromText = async (title: string, description?: string): Promise<SubTask[]> => {
+    // Simulate a delay to mimic API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    const taskText = `${title}${description ? " " + description : ""}`;
+    
+    // Generate 5 subtasks based on the task
+    return generateSubtasksList(taskText);
+  };
+  
+  // Helper function to generate subtasks
+  const generateSubtasksList = (text: string): SubTask[] => {
+    // Basic logic to generate subtasks based on the text
+    // You could replace this with an actual AI API call in the future
+    
+    // Common subtask patterns for different types of tasks
+    const planningSubtasks = [
+      "Составить план действий",
+      "Определить сроки выполнения",
+      "Распределить задачи между участниками",
+      "Подготовить необходимые материалы",
+      "Провести установочную встречу"
+    ];
+    
+    const researchSubtasks = [
+      "Определить ключевые вопросы",
+      "Собрать информацию из различных источников",
+      "Проанализировать собранные данные",
+      "Составить отчет о результатах",
+      "Представить выводы"
+    ];
+    
+    const developmentSubtasks = [
+      "Написать техническое задание",
+      "Разработать прототип",
+      "Провести тестирование",
+      "Внести необходимые изменения",
+      "Подготовить к запуску"
+    ];
+    
+    const writingSubtasks = [
+      "Составить план документа",
+      "Написать черновик",
+      "Проверить на ошибки",
+      "Внести правки",
+      "Подготовить финальную версию"
+    ];
+    
+    const organizationalSubtasks = [
+      "Определить необходимые ресурсы",
+      "Составить график работ",
+      "Распределить ответственности",
+      "Провести координационную встречу",
+      "Подготовить отчет о ходе работ"
+    ];
+    
+    const cleaningSubtasks = [
+      "Составить список вещей для уборки",
+      "Подготовить чистящие средства",
+      "Убрать основные помещения",
+      "Провести влажную уборку",
+      "Вынести мусор"
+    ];
+    
+    // Choose which set of subtasks to use based on keywords in the text
+    const lowerText = text.toLowerCase();
+    let selectedSubtasks;
+    
+    if (lowerText.includes("план") || lowerText.includes("планир")) {
+      selectedSubtasks = planningSubtasks;
+    } else if (lowerText.includes("исслед") || lowerText.includes("анализ") || lowerText.includes("изуч")) {
+      selectedSubtasks = researchSubtasks;
+    } else if (lowerText.includes("разраб") || lowerText.includes("создан") || lowerText.includes("программ")) {
+      selectedSubtasks = developmentSubtasks;
+    } else if (lowerText.includes("пис") || lowerText.includes("статья") || lowerText.includes("текст") || lowerText.includes("документ")) {
+      selectedSubtasks = writingSubtasks;
+    } else if (lowerText.includes("организ") || lowerText.includes("управл") || lowerText.includes("координ")) {
+      selectedSubtasks = organizationalSubtasks;
+    } else if (lowerText.includes("убор") || lowerText.includes("чист") || lowerText.includes("порядок")) {
+      selectedSubtasks = cleaningSubtasks;
+    } else {
+      // Default to organizational subtasks if no match
+      selectedSubtasks = organizationalSubtasks;
+    }
+    
+    return selectedSubtasks.map(title => ({
+      id: Math.random().toString(36).substring(2, 9),
+      title,
+      completed: false
+    }));
+  };
+
   return (
     <TaskContext.Provider
       value={{ 
@@ -279,7 +405,9 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
         getTaskById,
         addSubtask,
         removeSubtask,
-        toggleSubtaskStatus
+        toggleSubtaskStatus,
+        generateSubtasks,
+        generateSubtasksFromText
       }}
     >
       {children}

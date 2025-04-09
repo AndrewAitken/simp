@@ -32,8 +32,9 @@ const SubtaskItem: React.FC<SubtaskItemProps> = ({
   };
 
   return (
-    <div className="flex items-center gap-2 py-2 group animate-fade-in">
+    <div className="flex items-center gap-2 py-2 group animate-fade-in" onClick={e => e.stopPropagation()}>
       <button
+        type="button"
         onClick={handleToggle}
         className={cn(
           "flex-shrink-0 w-6 h-6 rounded-md border border-gray-300 dark:border-zinc-700 flex items-center justify-center transition-colors",
@@ -53,6 +54,7 @@ const SubtaskItem: React.FC<SubtaskItemProps> = ({
       
       {!disabled && (
         <button 
+          type="button"
           onClick={handleRemove}
           className="text-gray-400 hover:text-red-500 transition-colors"
         >

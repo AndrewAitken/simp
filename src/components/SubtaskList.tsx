@@ -56,13 +56,10 @@ const SubtaskList: React.FC<SubtaskListProps> = ({
   };
 
   return (
-    <div className="mt-4 space-y-1">
+    <div className="mt-1 space-y-1" onClick={e => e.stopPropagation()}>
       {subtasks.length > 0 && (
-        <div className="mb-2">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-            Подшаги
-          </h4>
-          <div className="space-y-1 pl-1">
+        <div className="pl-1">
+          <div className="space-y-1">
             {subtasks.map((subtask) => (
               <SubtaskItem 
                 key={subtask.id}
@@ -95,12 +92,14 @@ const SubtaskList: React.FC<SubtaskListProps> = ({
                 variant="outline"
                 onClick={handleAddSubtask}
                 className="h-8"
+                type="button"
               >
                 Добавить
               </Button>
             </div>
           ) : (
             <button
+              type="button"
               onClick={startAdding}
               className="flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
             >
