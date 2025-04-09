@@ -23,7 +23,7 @@ const Index = () => {
         {focusTasks.length > 0 && <div className="mb-8">
             
             {focusTasks.map(task => <div key={task.id} onClick={() => handleTaskClick(task.id)} className="p-4 rounded-xl mb-2 cursor-pointer bg-[D3DEFF] bg-[#d3deff]">
-                <h3 className="text-foreground text-lg font-semibold">{task.title}</h3>
+                <h3 className="text-foreground text-base font-semibold">{task.title}</h3>
               </div>)}
           </div>}
         
