@@ -11,6 +11,7 @@ import NewTask from "./pages/NewTask";
 import EditTask from "./pages/EditTask";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import CalendarView from "./pages/CalendarView";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
               <Route path="/new-task" element={<NewTask />} />
               <Route path="/edit-task/:id" element={<EditTask />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/calendar" element={<CalendarView />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

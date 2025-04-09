@@ -25,11 +25,11 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   return (
     <div className="group mb-4 animate-fade-in">
       {task.time && <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">{task.time}</div>}
-      <div className="flex items-start gap-3 cursor-pointer" onClick={handleTaskClick}>
+      <div className="flex items-start gap-3 cursor-pointer bg-white dark:bg-zinc-800 p-4 rounded-xl border border-gray-100 dark:border-zinc-700" onClick={handleTaskClick}>
         <button 
           onClick={handleToggle} 
           className={cn(
-            "flex-shrink-0 w-6 h-6 mt-0.5 rounded-full border border-gray-300 dark:border-zinc-700 flex items-center justify-center transition-colors", 
+            "flex-shrink-0 w-6 h-6 mt-0.5 rounded-md border border-gray-300 dark:border-zinc-600 flex items-center justify-center transition-colors", 
             task.status === "completed" ? "bg-gray-200 dark:bg-zinc-700" : "bg-white dark:bg-zinc-800"
           )}
         >
@@ -37,7 +37,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
         </button>
         <div className="flex-1">
           <h3 className={cn(
-            "text-foreground",
+            "text-foreground font-medium",
             task.status === "completed" && "line-through text-gray-400 dark:text-gray-500"
           )}>
             {task.title}
@@ -52,7 +52,6 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
           }
         </div>
       </div>
-      <div className="mt-4 border-b border-gray-200 dark:border-zinc-800"></div>
     </div>
   );
 };
