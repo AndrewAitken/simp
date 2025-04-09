@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Focus, Trash, Sparkles } from "lucide-react";
@@ -13,11 +12,19 @@ import ReminderSelector from "@/components/ReminderSelector";
 import SubtaskList from "@/components/SubtaskList";
 import { Switch } from "@/components/ui/switch";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-
 const EditTask = () => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string; }>();
-  const { getTaskById, updateTask, deleteTask, generateSubtasks } = useTask();
+  const {
+    id
+  } = useParams<{
+    id: string;
+  }>();
+  const {
+    getTaskById,
+    updateTask,
+    deleteTask,
+    generateSubtasks
+  } = useTask();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [time, setTime] = useState("");
@@ -25,9 +32,12 @@ const EditTask = () => {
   const [isFocusTask, setIsFocusTask] = useState(false);
   const [reminder, setReminder] = useState<ReminderOption>("none");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [subtasks, setSubtasks] = useState<{ id: string; title: string; completed: boolean; }[]>([]);
+  const [subtasks, setSubtasks] = useState<{
+    id: string;
+    title: string;
+    completed: boolean;
+  }[]>([]);
   const [isGeneratingSubtasks, setIsGeneratingSubtasks] = useState(false);
-
   useEffect(() => {
     if (!id) return;
     const task = getTaskById(id);
@@ -44,7 +54,6 @@ const EditTask = () => {
     setReminder(task.reminder || "none");
     setSubtasks(task.subtasks || []);
   }, [id, getTaskById, navigate]);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!id) return;
@@ -64,26 +73,21 @@ const EditTask = () => {
     toast.success("Задача успешно обновлена");
     navigate("/");
   };
-
   const handleDelete = () => {
     if (!id) return;
     deleteTask(id);
     toast.success("Задача успешно удалена");
     navigate("/");
   };
-
   const handleGenerateSubtasks = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
     if (!title.trim()) {
       toast.error("Для генерации подшагов укажите название задачи");
       return;
     }
-    
     try {
       setIsGeneratingSubtasks(true);
-      
       if (id) {
         const generatedSubtasks = await generateSubtasks(id, title, description);
         setSubtasks(prev => [...prev, ...generatedSubtasks]);
@@ -96,11 +100,9 @@ const EditTask = () => {
       setIsGeneratingSubtasks(false);
     }
   };
-
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
   };
-
   return <div className="min-h-screen bg-background" onClick={e => e.stopPropagation()}>
       <div className="max-w-md mx-auto px-4">
         <header className="py-4 mb-4">
@@ -142,36 +144,22 @@ const EditTask = () => {
             </div>
 
             <div>
-              <Textarea 
-                placeholder="Добавить описание (опционально)" 
-                className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-background text-foreground" 
-                value={description} 
-                onChange={handleTextareaChange}
-                onClick={e => e.stopPropagation()} 
-              />
+              <Textarea placeholder="Добавить описание (опционально)" className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-background text-foreground" value={description} onChange={handleTextareaChange} onClick={e => e.stopPropagation()} />
             </div>
             
             {/* Subtasks section */}
-            {id && (
-              <div className="space-y-2">
+            {id && <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
                     Подшаги
                   </h4>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={handleGenerateSubtasks}
-                    disabled={isGeneratingSubtasks}
-                    className="flex items-center gap-1"
-                  >
+                  <Button variant="outline" size="sm" onClick={handleGenerateSubtasks} disabled={isGeneratingSubtasks} className="flex items-center gap-2">
                     <Sparkles className="h-3.5 w-3.5" />
-                    <span>Сгенерировать подшаги</span>
+                    <span>Сгенерировать</span>
                   </Button>
                 </div>
                 <SubtaskList taskId={id} subtasks={subtasks} />
-              </div>
-            )}
+              </div>}
 
             <div className="border-t border-gray-100 dark:border-zinc-800 pt-4">
               <TimePicker value={time} onChange={setTime} />
@@ -205,5 +193,4 @@ const EditTask = () => {
       </div>
     </div>;
 };
-
 export default EditTask;
