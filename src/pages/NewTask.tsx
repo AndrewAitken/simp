@@ -5,12 +5,13 @@ import { ArrowLeft, Focus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useTask, TaskCategory, TaskPriority, ReminderOption } from "@/contexts/TaskContext";
+import { useTask, TaskCategory, TaskPriority, ReminderOption, SubTask } from "@/contexts/TaskContext";
 import { toast } from "sonner";
 import CategoryToggle from "@/components/CategoryToggle";
 import TimePicker from "@/components/TimePicker";
 import ReminderSelector from "@/components/ReminderSelector";
 import { Switch } from "@/components/ui/switch";
+import SubtaskList from "@/components/SubtaskList";
 
 const NewTask = () => {
   const navigate = useNavigate();
@@ -21,6 +22,10 @@ const NewTask = () => {
   const [category, setCategory] = useState<TaskCategory>("today");
   const [isFocusTask, setIsFocusTask] = useState(false);
   const [reminder, setReminder] = useState<ReminderOption>("none");
+  const [subtasks, setSubtasks] = useState<SubTask[]>([]);
+  
+  // Generate temporary task ID for subtask management
+  const [tempTaskId] = useState(`temp-${Math.random().toString(36).substring(2, 9)}`);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +40,8 @@ const NewTask = () => {
       time: time || undefined,
       category,
       priority: isFocusTask ? "focus" : "normal",
-      reminder: reminder !== "none" ? reminder : undefined
+      reminder: reminder !== "none" ? reminder : undefined,
+      subtasks: subtasks
     });
     
     toast.success("Задача успешно создана");
@@ -75,6 +81,9 @@ const NewTask = () => {
                 onChange={e => setDescription(e.target.value)} 
               />
             </div>
+            
+            {/* Subtasks section */}
+            <SubtaskList taskId={tempTaskId} subtasks={subtasks} />
 
             <div className="border-t border-gray-100 dark:border-zinc-800 pt-4">
               <TimePicker value={time} onChange={setTime} />

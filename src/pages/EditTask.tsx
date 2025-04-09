@@ -10,21 +10,14 @@ import { toast } from "sonner";
 import CategoryToggle from "@/components/CategoryToggle";
 import TimePicker from "@/components/TimePicker";
 import ReminderSelector from "@/components/ReminderSelector";
+import SubtaskList from "@/components/SubtaskList";
 import { Switch } from "@/components/ui/switch";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 const EditTask = () => {
   const navigate = useNavigate();
-  const {
-    id
-  } = useParams<{
-    id: string;
-  }>();
-  const {
-    getTaskById,
-    updateTask,
-    deleteTask
-  } = useTask();
+  const { id } = useParams<{ id: string; }>();
+  const { getTaskById, updateTask, deleteTask } = useTask();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [time, setTime] = useState("");
@@ -32,6 +25,7 @@ const EditTask = () => {
   const [isFocusTask, setIsFocusTask] = useState(false);
   const [reminder, setReminder] = useState<ReminderOption>("none");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [subtasks, setSubtasks] = useState<{ id: string; title: string; completed: boolean; }[]>([]);
 
   useEffect(() => {
     if (!id) return;
@@ -47,6 +41,7 @@ const EditTask = () => {
     setCategory(task.category);
     setIsFocusTask(task.priority === "focus");
     setReminder(task.reminder || "none");
+    setSubtasks(task.subtasks || []);
   }, [id, getTaskById, navigate]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -62,7 +57,8 @@ const EditTask = () => {
       time: time || undefined,
       category,
       priority: isFocusTask ? "focus" : "normal",
-      reminder: reminder !== "none" ? reminder : undefined
+      reminder: reminder !== "none" ? reminder : undefined,
+      subtasks: subtasks
     });
     toast.success("Задача успешно обновлена");
     navigate("/");
@@ -131,6 +127,9 @@ const EditTask = () => {
                 onChange={e => setDescription(e.target.value)} 
               />
             </div>
+            
+            {/* Subtasks section */}
+            {id && <SubtaskList taskId={id} subtasks={subtasks} />}
 
             <div className="border-t border-gray-100 dark:border-zinc-800 pt-4">
               <TimePicker value={time} onChange={setTime} />

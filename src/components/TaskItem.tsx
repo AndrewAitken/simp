@@ -21,6 +21,11 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   const handleTaskClick = () => {
     navigate(`/edit-task/${task.id}`);
   };
+
+  // Calculate completed subtasks ratio
+  const subtaskCount = task.subtasks?.length || 0;
+  const completedSubtasks = task.subtasks?.filter(subtask => subtask.completed).length || 0;
+  const hasSubtasks = subtaskCount > 0;
   
   return (
     <div className="group mb-4 animate-fade-in">
@@ -50,6 +55,26 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
               {task.description}
             </p>
           }
+          
+          {/* Show subtask progress if there are any subtasks */}
+          {hasSubtasks && (
+            <div className="mt-2 flex items-center gap-2">
+              <div className="h-1.5 flex-1 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                <div 
+                  className={cn(
+                    "h-full rounded-full", 
+                    completedSubtasks === subtaskCount 
+                      ? "bg-green-400 dark:bg-green-600" 
+                      : "bg-blue-400 dark:bg-blue-600"
+                  )}
+                  style={{ width: `${subtaskCount > 0 ? (completedSubtasks / subtaskCount) * 100 : 0}%` }}
+                />
+              </div>
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {completedSubtasks}/{subtaskCount}
+              </span>
+            </div>
+          )}
         </div>
       </div>
       <div className="mt-4 border-b border-gray-200 dark:border-zinc-800"></div>

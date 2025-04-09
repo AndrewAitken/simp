@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
@@ -8,6 +7,12 @@ export type TaskPriority = "focus" | "normal";
 export type TaskStatus = "completed" | "pending";
 export type TaskCategory = "today" | "tomorrow" | "later";
 export type ReminderOption = "none" | "30min" | "1hour" | "2hours" | "1day" | "custom";
+
+export interface SubTask {
+  id: string;
+  title: string;
+  completed: boolean;
+}
 
 export interface Task {
   id: string;
@@ -19,6 +24,7 @@ export interface Task {
   status: TaskStatus;
   createdAt: Date;
   reminder?: ReminderOption;
+  subtasks?: SubTask[];
 }
 
 interface TaskContextType {
@@ -28,6 +34,9 @@ interface TaskContextType {
   deleteTask: (id: string) => void;
   toggleTaskStatus: (id: string) => void;
   getTaskById: (id: string) => Task | undefined;
+  addSubtask: (taskId: string, subtaskTitle: string) => void;
+  removeSubtask: (taskId: string, subtaskId: string) => void;
+  toggleSubtaskStatus: (taskId: string, subtaskId: string) => void;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -42,6 +51,10 @@ const exampleTasks: Task[] = [
     priority: "normal",
     status: "pending",
     createdAt: new Date(),
+    subtasks: [
+      { id: "1-1", title: "Придумать название", completed: true },
+      { id: "1-2", title: "Добавить описание", completed: false },
+    ]
   },
   {
     id: "2",
@@ -164,6 +177,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       id: Math.random().toString(36).substring(2, 9),
       status: "pending",
       createdAt: new Date(),
+      subtasks: task.subtasks || []
     };
     setTasks((prev) => [...prev, newTask]);
   };
@@ -195,9 +209,78 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return tasks.find(task => task.id === id);
   };
 
+  // Add new subtask to a task
+  const addSubtask = (taskId: string, subtaskTitle: string) => {
+    if (!subtaskTitle.trim()) return;
+    
+    setTasks((prev) =>
+      prev.map((task) => {
+        if (task.id === taskId) {
+          const subtasks = task.subtasks || [];
+          return {
+            ...task,
+            subtasks: [
+              ...subtasks, 
+              { 
+                id: Math.random().toString(36).substring(2, 9), 
+                title: subtaskTitle, 
+                completed: false 
+              }
+            ]
+          };
+        }
+        return task;
+      })
+    );
+  };
+
+  // Remove subtask from a task
+  const removeSubtask = (taskId: string, subtaskId: string) => {
+    setTasks((prev) =>
+      prev.map((task) => {
+        if (task.id === taskId && task.subtasks) {
+          return {
+            ...task,
+            subtasks: task.subtasks.filter((subtask) => subtask.id !== subtaskId)
+          };
+        }
+        return task;
+      })
+    );
+  };
+
+  // Toggle subtask completion status
+  const toggleSubtaskStatus = (taskId: string, subtaskId: string) => {
+    setTasks((prev) =>
+      prev.map((task) => {
+        if (task.id === taskId && task.subtasks) {
+          return {
+            ...task,
+            subtasks: task.subtasks.map((subtask) =>
+              subtask.id === subtaskId
+                ? { ...subtask, completed: !subtask.completed }
+                : subtask
+            )
+          };
+        }
+        return task;
+      })
+    );
+  };
+
   return (
     <TaskContext.Provider
-      value={{ tasks, addTask, updateTask, deleteTask, toggleTaskStatus, getTaskById }}
+      value={{ 
+        tasks, 
+        addTask, 
+        updateTask, 
+        deleteTask, 
+        toggleTaskStatus, 
+        getTaskById,
+        addSubtask,
+        removeSubtask,
+        toggleSubtaskStatus
+      }}
     >
       {children}
     </TaskContext.Provider>
