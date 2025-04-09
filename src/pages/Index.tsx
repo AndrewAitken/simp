@@ -25,19 +25,14 @@ const Index = () => {
         
         {focusTasks.length > 0 && (
           <div className="mb-8">
-            <h2 className="font-bold mb-4 text-foreground text-xl">Фокус</h2>
+            <h2 className="font-bold mb-4 text-foreground text-lg">Фокус</h2>
             {focusTasks.map(task => (
               <div 
                 key={task.id} 
-                className="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-xl mb-3 cursor-pointer" 
+                className="bg-gray-100 dark:bg-zinc-900 p-4 rounded-xl mb-2 cursor-pointer" 
                 onClick={() => handleTaskClick(task.id)}
               >
-                <h3 className="text-foreground text-lg font-medium">{task.title}</h3>
-                {task.description && (
-                  <p className="text-gray-600 dark:text-gray-400 mt-2 line-clamp-2 text-sm">
-                    {task.description}
-                  </p>
-                )}
+                <h3 className="text-foreground text-lg font-semibold">{task.title}</h3>
               </div>
             ))}
           </div>
