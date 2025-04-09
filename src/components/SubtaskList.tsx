@@ -21,7 +21,12 @@ const SubtaskList: React.FC<SubtaskListProps> = ({
   const [newSubtaskTitle, setNewSubtaskTitle] = useState("");
   const [isAdding, setIsAdding] = useState(false);
 
-  const handleAddSubtask = () => {
+  const handleAddSubtask = (e?: React.MouseEvent | React.KeyboardEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
     if (newSubtaskTitle.trim()) {
       addSubtask(taskId, newSubtaskTitle.trim());
       setNewSubtaskTitle("");
@@ -31,11 +36,23 @@ const SubtaskList: React.FC<SubtaskListProps> = ({
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      handleAddSubtask();
+      handleAddSubtask(e);
     } else if (e.key === "Escape") {
+      e.preventDefault();
+      e.stopPropagation();
       setIsAdding(false);
       setNewSubtaskTitle("");
     }
+  };
+
+  const startAdding = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsAdding(true);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewSubtaskTitle(e.target.value);
   };
 
   return (
@@ -62,12 +79,13 @@ const SubtaskList: React.FC<SubtaskListProps> = ({
       {!disabled && (
         <div className="mt-2">
           {isAdding ? (
-            <div className="flex items-center gap-2 mt-2">
+            <div className="flex items-center gap-2 mt-2" onClick={e => e.stopPropagation()}>
               <Input
                 type="text"
                 value={newSubtaskTitle}
-                onChange={(e) => setNewSubtaskTitle(e.target.value)}
+                onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
+                onClick={e => e.stopPropagation()}
                 placeholder="Название подзадачи"
                 className="flex-1 h-8 text-sm"
                 autoFocus
@@ -83,7 +101,7 @@ const SubtaskList: React.FC<SubtaskListProps> = ({
             </div>
           ) : (
             <button
-              onClick={() => setIsAdding(true)}
+              onClick={startAdding}
               className="flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
             >
               <Plus className="h-4 w-4 mr-1" />

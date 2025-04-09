@@ -49,7 +49,7 @@ const NewTask = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background" onClick={(e) => e.stopPropagation()}>
       <div className="max-w-md mx-auto px-4">
         <header className="py-4 mb-4">
           <div className="flex items-center">
@@ -60,7 +60,7 @@ const NewTask = () => {
           </div>
         </header>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
           <div className="space-y-6">
             <div>
               <Input 
@@ -79,6 +79,7 @@ const NewTask = () => {
                 className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-background text-foreground resize-none" 
                 value={description} 
                 onChange={e => setDescription(e.target.value)} 
+                onClick={(e) => e.stopPropagation()}
               />
             </div>
             

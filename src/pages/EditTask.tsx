@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Focus, Trash } from "lucide-react";
@@ -12,18 +13,11 @@ import ReminderSelector from "@/components/ReminderSelector";
 import SubtaskList from "@/components/SubtaskList";
 import { Switch } from "@/components/ui/switch";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+
 const EditTask = () => {
   const navigate = useNavigate();
-  const {
-    id
-  } = useParams<{
-    id: string;
-  }>();
-  const {
-    getTaskById,
-    updateTask,
-    deleteTask
-  } = useTask();
+  const { id } = useParams<{ id: string }>();
+  const { getTaskById, updateTask, deleteTask } = useTask();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [time, setTime] = useState("");
@@ -36,6 +30,7 @@ const EditTask = () => {
     title: string;
     completed: boolean;
   }[]>([]);
+  
   useEffect(() => {
     if (!id) return;
     const task = getTaskById(id);
@@ -52,6 +47,7 @@ const EditTask = () => {
     setReminder(task.reminder || "none");
     setSubtasks(task.subtasks || []);
   }, [id, getTaskById, navigate]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!id) return;
@@ -71,13 +67,16 @@ const EditTask = () => {
     toast.success("Задача успешно обновлена");
     navigate("/");
   };
+
   const handleDelete = () => {
     if (!id) return;
     deleteTask(id);
     toast.success("Задача успешно удалена");
     navigate("/");
   };
-  return <div className="min-h-screen bg-background">
+
+  return (
+    <div className="min-h-screen bg-background" onClick={(e) => e.stopPropagation()}>
       <div className="max-w-md mx-auto px-4">
         <header className="py-4 mb-4">
           <div className="flex items-center justify-between">
@@ -111,14 +110,27 @@ const EditTask = () => {
           </div>
         </header>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
           <div className="space-y-6">
             <div>
-              <Input type="text" placeholder="Название задачи" value={title} onChange={e => setTitle(e.target.value)} autoFocus className="text-xl font-medium shadow-none focus-visible:ring-0 h-auto placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-background text-foreground" />
+              <Input 
+                type="text" 
+                placeholder="Название задачи" 
+                value={title} 
+                onChange={e => setTitle(e.target.value)} 
+                autoFocus 
+                className="text-xl font-medium shadow-none focus-visible:ring-0 h-auto placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-background text-foreground" 
+              />
             </div>
 
             <div>
-              <Textarea placeholder="Добавить описание (опционально)" className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-background text-foreground resize-none" value={description} onChange={e => setDescription(e.target.value)} />
+              <Textarea 
+                placeholder="Добавить описание (опционально)" 
+                className="min-h-24 shadow-none focus-visible:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-background text-foreground resize-none" 
+                value={description} 
+                onChange={e => setDescription(e.target.value)} 
+                onClick={(e) => e.stopPropagation()}
+              />
             </div>
             
             {/* Subtasks section */}
@@ -154,6 +166,8 @@ const EditTask = () => {
           </div>
         </form>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default EditTask;

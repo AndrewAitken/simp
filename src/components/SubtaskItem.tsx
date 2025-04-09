@@ -18,6 +18,7 @@ const SubtaskItem: React.FC<SubtaskItemProps> = ({
   disabled = false 
 }) => {
   const handleToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     if (!disabled) {
       onToggle();
@@ -25,6 +26,7 @@ const SubtaskItem: React.FC<SubtaskItemProps> = ({
   };
 
   const handleRemove = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     onRemove();
   };
@@ -52,7 +54,7 @@ const SubtaskItem: React.FC<SubtaskItemProps> = ({
       {!disabled && (
         <button 
           onClick={handleRemove}
-          className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="text-gray-400 hover:text-red-500 transition-colors"
         >
           <X className="h-4 w-4" />
         </button>
